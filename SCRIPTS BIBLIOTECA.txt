@@ -1,0 +1,107 @@
+create database biblioteca;
+use biblioteca;
+
+CREATE TABLE livros (
+codLivro int PRIMARY KEY auto_increment,
+titulo varchar(100),
+autor varchar(100),
+genero varchar(100),
+editora varchar(100)
+);
+
+CREATE TABLE bibliotecario (
+codFuncionario int PRIMARY KEY auto_increment,
+nome varchar(150),
+email varchar(150) unique,
+dataNascimento int,
+tel varchar(15),
+celular varchar(15),
+cpf varchar(15) unique,
+cidade varchar(150),
+uf char(2),
+rg varchar(15) unique,
+cep varchar(20),
+rua varchar(100),
+logradouro varchar(50),
+numero varchar(10),
+bairro varchar(150),
+complemento varchar(20)
+);
+
+CREATE TABLE aluno (
+ra int PRIMARY KEY auto_increment,
+turma varchar(10),
+dataNascimento date,
+email varchar(150) unique,
+celular varchar(15),
+nome varchar(100),
+tel varchar(15)
+);
+
+CREATE TABLE emprestimo_devolucao (
+codEmprestimo int PRIMARY KEY auto_increment,
+data_devolucao date,
+data_emprestimo date,
+codLivro int,
+ra int,
+codFuncionario int,
+FOREIGN KEY(ra) REFERENCES aluno (ra),
+FOREIGN KEY(codFuncionario) REFERENCES bibliotecario (codFuncionario),
+FOREIGN KEY(codLivro) REFERENCES livros (codLivro)
+);
+
+INSERT into bibliotecario (nome, email, dataNascimento, cpf, tel, cidade, uf, celular, rg, cep, rua, logradouro, numero, bairro, complemento) VALUES
+('Enzo Candido','enzo@gmail.com','2004-04-23','631.654.546-84','14616-1515','Ribeirão Pires','SP', '1199961-5004','37.005.137-3',NULL,NULL,NULL,NULL,NULL, NULL);
+
+INSERT into livros (titulo, autor, editora, genero) VALUES
+('Dom Quixote','Miguel de Cervantes','Francisco de Robles','Romance'),
+('Guerra e Paz','Liev Tolstoi','Cosac & Naify','Ficcao'),
+('A Montanha Magica','Thomas Mann','S. Ficher','Ficcao'),
+('Cem Anos de Solidao','Gabriel Garcia','Record','Realismo Magico'),
+('Ulisses','James Joyce','Relogio Dagua','Ficcao'),
+('Em Busca do Tempo Perdido','Marcel Proust','Ediouro','Literatura moderna'),
+('A Divina','Dante Alighieri','34','Poesia epica'),
+('O Homem','Robert Musil','Nova Fronteira','Romance'),
+('O Processo','Franz Kafka','Companhia das Letras','Romance'),
+('O Som','William Faulkner','Companhia das Letras','Gotico');
+
+
+INSERT into aluno (nome, dataNascimento, tel, turma, celular, email) VALUES
+('Luiz Souza','2002-07-30','52540-2607','2C', '1199509-5820', 'luizsouza@gmail.com'),
+('Pedro Pereira','2001-05-24','98690-1811','2C','1192640-1757', 'pedropereira@gmail.com'),
+('Jose Teixeira','2004-06-13','98549-4401','2C','1198471-3753', 'joseteixeira@gmail.com'),
+('Paulo Santana','2002-09-20','58811-9854','2C','1198174-0450', 'paulosantana@gmail.com'),
+('Carlos Nascimento','2004-05-14','13555-5004','2C','1199547-4457', 'carlosnascimento@gmail.com'),
+('Isabella Juliana','2004-10-30','98321-8725','2C','1199767-8902', 'isabellajuliana@gmail.com'),
+('Liz Olivia','2003-12-24','99833-5287','2C','1198277-8160', 'lizolivia@gmail.com'),
+('Levi Otavio','2004-09-21','99664-9353','2C','1198514-1770', 'leviotavio@gmail.com'),
+('Sophie Emily','2003-01-01','63839-6071','2C','1199964-2712', 'sophieemily@gmail.com'),
+('Eduarda Carla','2004-03-23','99836-2894','2C','1199414-2036', 'eduardacarla@gmail.com');
+
+INSERT into emprestimo_devolucao (codFuncionario, codlivro, ra, data_emprestimo, data_devolucao) VALUES
+
+(1,1,10,'2019-09-21','2020-09-21'),
+(1,2,9,'2019-01-01','2020-01-01'),
+(1,3,8,'2019-07-30','2020-07-30'),
+(1,4,7,'2019-12-24','2020-12-24'),
+(1,5,6,'2019-07-30','2020-07-30'),
+(1,6,5,'2019-01-01','2020-01-01'),
+(1,7,4,'2019-06-13','2020-06-13'),
+(1,8,3,'2019-05-14','2020-05-14'),
+(1,9,2,'2019-01-01','2020-01-01'),
+(1,10,1,'2019-05-14','2020-05-14');
+
+ALTER TABLE bibliotecario DROP COLUMN rua;
+ALTER TABLE livros ADD COLUMN paginas int;
+ALTER TABLE livros ADD COLUMN qtdeExemplares int;
+
+update livros set paginas = 100, qtdeExemplares=2 where codLivro=1;
+update livros set paginas = 150, qtdeExemplares=5 where codLivro=2;
+update livros set paginas = 145, qtdeExemplares=3 where codLivro=3;
+update livros set paginas = 250, qtdeExemplares=1 where codLivro=4;
+update livros set paginas = 520, qtdeExemplares=8 where codLivro=5;
+update livros set paginas = 100, qtdeExemplares=7 where codLivro=6;
+update livros set paginas = 110, qtdeExemplares=6 where codLivro=7;
+update livros set paginas = 145, qtdeExemplares=2 where codLivro=8;
+update livros set paginas = 230, qtdeExemplares=9 where codLivro=9;
+update livros set paginas = 560, qtdeExemplares=7 where codLivro=10;
